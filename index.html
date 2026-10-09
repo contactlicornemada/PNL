@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1a0826">
+<title>Arène PNL · L'ascension</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Cinzel:wght@800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent;user-select:none}
+html{scroll-behavior:smooth}
+body{font-family:'Fredoka',system-ui,sans-serif;font-weight:600;color:#fff;min-height:100dvh;background:radial-gradient(ellipse at 50% 100%,#ff7a1a 0,#a8281f 25%,#4a1a4a 60%,#1a0826 100%) fixed}
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+#arch{position:fixed;left:0;right:0;bottom:0;height:150px;z-index:0;pointer-events:none;opacity:.55;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='150'%3E%3Cpath d='M0 150V60a45 45 0 0 1 90 0v90zM14 150V62a31 31 0 0 1 62 0v88z' fill='%2312060f' fill-rule='evenodd'/%3E%3C/svg%3E") repeat-x bottom}
+#app{max-width:480px;margin:0 auto;position:relative;z-index:1;padding-top:calc(78px + env(safe-area-inset-top,0px));padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+#app.shk{animation:shk .35s}
+@keyframes shk{20%{transform:translate(-6px,3px)}40%{transform:translate(6px,-3px)}60%{transform:translate(-4px,2px)}}
+.cin{font-family:'Cinzel',Georgia,serif;font-weight:800}
+#hud{position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(100%,480px);z-index:20;display:flex;align-items:center;gap:8px;padding:calc(8px + env(safe-area-inset-top,0px)) 10px 8px;background:#1a0826ee;backdrop-filter:blur(6px);border-bottom:3px solid #ff7a1a88}
+.lv{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;background:radial-gradient(circle at 35% 30%,#fff9,#ffd24a 30%,#e58a00);border:3px solid #fff;color:#5a2a00;flex:none;box-shadow:0 0 14px #ffb52e}
+.xp{flex:1;min-width:0}.xp small{display:block;font-size:.76rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:14px;background:#0007;border-radius:9px;overflow:hidden;border:2px solid #0009}
+.bar i{display:block;height:100%;width:0;background:repeating-linear-gradient(45deg,#ff5a8a 0 8px,#ff9ab5 8px 16px);border-radius:9px;transition:width .5s}
+.chip{background:#0008;border-radius:20px;padding:6px 10px;font-size:.95rem;white-space:nowrap;flex:none}
+.sum,.start{text-align:center;padding:10px 16px;position:relative}
+.sum{margin-top:6px}.sum .big1{font-size:4.5rem;line-height:1;filter:drop-shadow(0 0 22px #ffb52e);animation:flick 1.2s infinite alternate}
+.sum b,.start b{display:block;font-size:1.7rem;color:#ffd24a;text-shadow:0 3px 0 #7a3b10,0 0 20px #ff9a2a}
+.sum small,.start small{opacity:.9;font-size:.95rem}
+.start{margin-top:24px}.start .big1{font-size:3rem}.start small{display:block;animation:bob2 1s infinite alternate}
+@keyframes bob2{to{transform:translateY(-8px)}}
+.world{margin:26px 12px 0;position:relative}
+.wh{display:flex;align-items:center;gap:10px;padding:10px;border-radius:22px;border:4px solid #fff;box-shadow:0 6px 0 #0006,0 0 24px var(--c);position:relative;z-index:2;background:repeating-linear-gradient(-45deg,var(--c) 0 14px,color-mix(in srgb,var(--c),#fff 40%) 14px 28px)}
+.wh .e{font-size:2.2rem;flex:none;filter:drop-shadow(0 3px 0 #0006)}
+.wh .t{flex:1;min-width:0;background:#1a0826dd;border-radius:14px;padding:6px 10px;line-height:1.1}
+.wh .t em{font-style:normal;font-size:.7rem;color:#ffd24a;letter-spacing:.12em}
+.wh .t b{display:block;font-size:.98rem}.wh .t small{font-size:.76rem;opacity:.85}
+.wh .bar{height:10px;margin-top:5px}.wh .n2{background:#1a0826dd;border-radius:14px;padding:8px 10px;font-size:1rem}
+.path{position:relative;margin-top:-6px}
+.path svg{position:absolute;inset:0;width:100%;height:100%}
+.sb,.sl{fill:none;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.sb{stroke:#fff4;stroke-width:12;stroke-dasharray:1 14}
+.sl{stroke:#ffd24a;stroke-width:9;opacity:0;transition:opacity .4s;filter:drop-shadow(0 0 7px #ff7a1a)}
+.sl.on{opacity:1}
+.dc{position:absolute;font-size:2.6rem;opacity:.4;pointer-events:none;animation:fl2 3s ease-in-out infinite alternate;filter:drop-shadow(0 4px 0 #0005)}
+@keyframes fl2{to{transform:translateY(-14px) rotate(8deg)}}
+.n{position:absolute;transform:translate(-50%,-50%);width:64px;height:64px;border:0;background:none;padding:0;color:#fff;font:inherit;cursor:pointer;touch-action:manipulation}
+.n::before,.n::after{content:'';position:absolute;top:50%;margin-top:-15px;width:22px;height:30px;background:var(--c);z-index:-1;filter:brightness(.85)}
+.n::before{left:-16px;clip-path:polygon(100% 50%,0 0,0 100%)}.n::after{right:-16px;clip-path:polygon(0 50%,100% 0,100% 100%)}
+.n.g::before,.n.g::after{display:none}
+.n .b{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;font-size:1.5rem;text-shadow:0 2px 0 #0007;background:radial-gradient(ellipse 30% 20% at 32% 24%,#fffe,#fff0),repeating-linear-gradient(60deg,#fff3 0 6px,#fff0 6px 12px),radial-gradient(circle at 40% 35%,var(--c) 35%,color-mix(in srgb,var(--c),#000 45%));border:4px solid #fff;box-shadow:0 6px 0 #0007;transition:transform .12s}
+.n:active .b{transform:scale(.88)}
+.n .st{position:absolute;left:50%;top:62px;transform:translateX(-50%);font-style:normal;font-size:1rem;letter-spacing:1px;color:#ffd24a;text-shadow:0 2px 0 #000a;white-space:nowrap}
+.n .ic{position:absolute;left:-6px;bottom:-4px;font-size:1rem;text-decoration:none;filter:drop-shadow(0 2px 0 #0008)}
+.n .fi{position:absolute;right:-8px;top:-16px;font-size:1.3rem;display:none;text-decoration:none;animation:flick .45s infinite alternate}
+.n.done .fi{display:block}
+@keyframes flick{to{transform:scale(1.18) rotate(-6deg);filter:brightness(1.3)}}
+.n.locked,.n.pre{filter:grayscale(1) brightness(.55)}
+.n.avail .b{animation:pulse 1.1s ease-in-out infinite;box-shadow:0 6px 0 #0007,0 0 22px var(--c)}
+.n.done .b{border-color:#ffd24a;box-shadow:0 6px 0 #8a5200,0 0 22px #ffd24a}
+.n.pop .b{animation:pop .5s}
+.n.g .b{background:radial-gradient(circle at 40% 35%,#ffe27a,#c9781a);width:76px;height:76px;margin:-6px;font-size:2.1rem}
+.av{position:absolute;left:50%;top:-34px;transform:translateX(-50%);font-size:2rem;animation:bob .7s ease-in-out infinite alternate;pointer-events:none;filter:drop-shadow(0 3px 0 #0007)}
+@keyframes pulse{50%{transform:scale(1.14)}}
+@keyframes pop{0%{transform:scale(.4)}60%{transform:scale(1.4)}100%{transform:scale(1)}}
+@keyframes bob{to{top:-44px}}
+#cta{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:19;font-size:1.3rem;padding:14px 30px;width:auto;animation:pulse 1.3s ease-in-out infinite}
+button.big{border:0;font:inherit;color:#fff;cursor:pointer;border-radius:24px;padding:16px;width:100%;font-size:1.25rem;background:linear-gradient(#ff9a5e,#e8281f);box-shadow:0 7px 0 #8a140f;text-shadow:0 2px 0 #0005;touch-action:manipulation}
+button.big:active{transform:translateY(5px);box-shadow:0 2px 0 #8a140f}
+button.big.alt{background:linear-gradient(#ffe27a,#f5a623);box-shadow:0 7px 0 #9a5a0a;color:#4a2400;text-shadow:none}
+button.big.gh{background:#4a2a5e;box-shadow:0 7px 0 #1a0826;font-size:1rem;padding:12px}
+#cta.big{background:linear-gradient(#ffe27a,#ff9a1f);color:#4a2400;box-shadow:0 7px 0 #9a5a0a,0 0 26px #ff9a1f;text-shadow:none}
+#nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,480px);z-index:20;display:grid;grid-template-columns:1fr 1fr;background:#1a0826;border-top:3px solid #ff7a1a88;padding-bottom:env(safe-area-inset-bottom,0px)}
+#nav button{background:none;border:0;color:#fff;font:inherit;font-size:.8rem;padding:10px 0 8px;min-height:62px;cursor:pointer;touch-action:manipulation}
+#nav button span{display:block;font-size:1.6rem;line-height:1.1}
+#veil{position:fixed;inset:0;background:#000a;z-index:30;opacity:0;pointer-events:none;transition:opacity .25s}
+#veil.on{opacity:1;pointer-events:auto}
+#sheet{position:fixed;bottom:0;left:50%;width:min(100%,480px);transform:translate(-50%,105%);z-index:31;background:linear-gradient(#4a2a7a,#2c1648);border:4px solid #ffd24a;border-bottom:0;border-radius:30px 30px 0 0;padding:18px 18px calc(20px + env(safe-area-inset-bottom,0px));max-height:88dvh;overflow:auto;transition:transform .3s cubic-bezier(.2,1.2,.4,1);text-align:center}
+#sheet.on{transform:translate(-50%,0)}
+#sheet .big{margin-top:10px}
+.cd{width:92px;height:92px;margin:-62px auto 6px;border-radius:50%;display:grid;place-items:center;font-size:2.6rem;border:5px solid #fff;background:radial-gradient(circle at 40% 35%,var(--c) 35%,color-mix(in srgb,var(--c),#000 45%));box-shadow:0 6px 0 #0006,0 0 22px var(--c)}
+#sheet h2{font-size:1.4rem;line-height:1.1;margin:6px 0}
+#sheet p{opacity:.9;font-size:1rem;margin:6px 0 10px;font-weight:500}
+.tag{font-size:.78rem;color:#ffd24a;text-transform:uppercase;letter-spacing:.06em}
+.stars{font-size:2.6rem;letter-spacing:6px;color:#fff3;text-shadow:0 3px 0 #0005;margin:4px 0}.stars .f{color:#ffd24a}
+.rw{display:flex;gap:8px;justify-content:center;margin:6px 0 4px}.rw span{background:#0007;border-radius:16px;padding:4px 14px}
+.ac{display:flex;align-items:center;gap:12px;text-align:left;background:#0005;border-radius:18px;padding:10px 12px;margin:8px 0;opacity:.45;filter:grayscale(1)}
+.ac.on{opacity:1;filter:none;background:#ffd24a22;border:2px solid #ffd24a}
+.ac b{display:block}.ac small{font-weight:500;opacity:.85}.ac span{font-size:2rem}
+.tg{display:flex;justify-content:space-between;align-items:center;background:#0005;border-radius:18px;padding:12px 16px;margin:8px 0}
+#sheet .ln{text-align:left}.ln h3{color:#ffd24a;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;margin:14px 0 4px}.ln p{font-weight:500;line-height:1.35;margin:0 0 4px}
+.dm{display:flex;gap:10px;background:#0006;border-radius:14px;padding:8px 10px;margin:6px 0;font-weight:500;font-size:.92rem;line-height:1.3}.dm span{font-size:1.5rem}.dm b{color:#ffd24a}
+.ln .nt{font-size:.78rem;opacity:.7;margin-top:12px;text-align:center}
+#toast{position:fixed;top:calc(74px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-170%);z-index:40;background:linear-gradient(#ffe27a,#f5a623);color:#4a2400;border:4px solid #fff;border-radius:22px;padding:10px 18px;transition:transform .4s cubic-bezier(.2,1.4,.4,1);box-shadow:0 6px 0 #0006;width:max-content;max-width:92vw;text-align:center}
+#toast.on{transform:translate(-50%,0)}
+.fl{position:fixed;z-index:45;pointer-events:none;font-size:1.6rem;color:#ffd24a;text-shadow:0 3px 0 #000;animation:fl 1.1s ease-out forwards;transform:translateX(-50%)}
+@keyframes fl{to{transform:translate(-50%,-90px) scale(1.3);opacity:0}}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+#splash{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;text-align:center;background:radial-gradient(ellipse at 50% 70%,#ff7a1acc,#4a1a4aee 55%,#1a0826 100%);transition:opacity .5s}
+#splash.off{opacity:0;pointer-events:none}
+#splash .sw{font-size:5.5rem;animation:flick .8s infinite alternate;filter:drop-shadow(0 0 24px #ffb52e)}
+#splash h1{font-size:2rem;line-height:1.05;color:#ffd24a;text-shadow:0 3px 0 #7a3b10,0 0 24px #ff9a2a}
+#splash p{max-width:320px;opacity:.9}
+#splash .big{max-width:340px;font-size:1.4rem}
+</style></head><body>
+<canvas id="bg"></canvas><div id="arch"></div>
+<div id="app">
+<div id="hud"><div class="lv" id="lv">1</div><div class="xp"><small id="ttl"></small><div class="bar"><i id="xpb"></i></div></div><div class="chip" id="stk">🔥 0</div></div>
+<div id="map"></div>
+</div>
+<button class="big" id="cta">▶ CONTINUER</button>
+<div id="nav"><button data-t="ach"><span>🏆</span>Succès</button><button data-t="opt"><span>⚙️</span>Options</button></div>
+<div id="veil"></div><div id="sheet"></div><div id="toast"></div><canvas id="fx"></canvas>
+<div id="splash"><div class="sw">⚔️🍭</div><h1 class="cin">ARÈNE DES<br>38 TECHNIQUES</h1><p>Gravis les 7 niveaux, des sables de l'arène jusqu'au Colisée. Chaque bonbon maîtrisé fait grimper ta flamme !</p><p id="sp"></p><button class="big" id="go">⚔️ ENTRER DANS L'ARÈNE</button></div>
+<script>
+const FAMILIES = [
+            {
+                id: 0,
+                name: "Recadrage et changement de sens",
+                grade: "📯 L'Augure du Cadre",
+                competences: [
+                    { id: "1", name: "Recadrage de sens", desc: "Donner une signification différente à une chose." },
+                    { id: "2", name: "Recadrage de contexte", desc: "Un comportement a des conséquences différentes selon le contexte." },
+                    { id: "3", name: "Recadrage en six pas", desc: "Séparer un comportement indésirable de la fonction qu'il remplit." },
+                    { id: "4", name: "Intention positive", desc: "Rechercher le besoin qu'un comportement tente de satisfaire." },
+                    { id: "5", name: "Sleight of Mouth", desc: "Recadrages verbaux pour examiner croyances et conséquences." },
+                    { id: "6", name: "Précadrage (Preframing)", desc: "Donner un cadre de compréhension avant une information." }
+                ]
+            },
+            {
+                id: 1,
+                name: "Ancrage et états émotionnels",
+                grade: "⚓ Le Gardien des Ancres",
+                competences: [
+                    { id: "7", name: "Ancrage", desc: "Associer un signal à une expérience ou un état émotionnel." },
+                    { id: "8", name: "Empilage d'ancres", desc: "Associer plusieurs souvenirs ou ressources à un même signal." },
+                    { id: "9", name: "Chaînage d'ancres", desc: "Organiser plusieurs états dans une séquence de progression." },
+                    { id: "10", name: "Désactivation d'ancre", desc: "Réduire l'influence d'une association émotionnelle indésirable." },
+                    { id: "11", name: "Cercle d'excellence", desc: "Visualiser un espace symbolique associé à ses ressources." },
+                    { id: "12", name: "État ressource", desc: "Identifier un état utile et les conditions qui le facilitent." }
+                ]
+            },
+            {
+                id: 2,
+                name: "Sous-modalités",
+                grade: "🔍 L'Explorateur Sensoriel",
+                competences: [
+                    { id: "13", name: "Association et dissociation", desc: "Vivre une scène à la première personne ou l'observer de l'extérieur." },
+                    { id: "14", name: "Modification de la taille d'une image", desc: "Agrandir ou réduire une représentation mentale." },
+                    { id: "15", name: "Luminosité et distance", desc: "Modifier des caractéristiques visuelles d'un souvenir ou d'une anticipation." },
+                    { id: "16", name: "Swish Pattern", desc: "Remplacer rapidement une représentation déclenchante." },
+                    { id: "17", name: "Double dissociation", desc: "Observer une scène à travers plusieurs niveaux de représentation." }
+                ]
+            },
+            {
+                id: 3,
+                name: "Positions perceptuelles",
+                grade: "🛡️ Le Tacticien des Trois Vues",
+                competences: [
+                    { id: "18", name: "Première position : son propre point de vue", desc: "Clarifier son expérience, ses besoins et ses limites." },
+                    { id: "19", name: "Deuxième position : le point de vue de l'autre", desc: "Comprendre comment l'autre peut vivre une situation." },
+                    { id: "20", name: "Troisième position : l'observateur neutre", desc: "Examiner la situation comme un observateur extérieur." },
+                    { id: "21", name: "Alignement des positions perceptuelles", desc: "Faire dialoguer les trois points de vue." }
+                ]
+            },
+            {
+                id: 4,
+                name: "Langage et influence verbale",
+                grade: "🗣️ L'Orateur Stratège",
+                competences: [
+                    { id: "22", name: "Méta-modèle", desc: "Questionner les formulations vagues et les généralisations." },
+                    { id: "23", name: "Modèle de Milton", desc: "Langage évocateur et suggestions ouvertes." },
+                    { id: "24", name: "Présuppositions", desc: "Éléments qu'une phrase tient implicitement pour acquis." },
+                    { id: "25", name: "Métaphores", desc: "Expliquer une idée à travers une autre situation." },
+                    { id: "26", name: "Double contrainte", desc: "Éviter les injonctions contradictoires, proposer un choix réel." },
+                    { id: "27", name: "Questions de précision", desc: "Réduire l'ambiguïté et rendre une affirmation vérifiable." },
+                    { id: "28", name: "Niveaux de langage et abstraction", desc: "Passer du détail concret à la catégorie générale." }
+                ]
+            },
+            {
+                id: 5,
+                name: "Croyances et conflits intérieurs",
+                grade: "⚖️ Le Médiateur des Croyances",
+                competences: [
+                    { id: "29", name: "Intégration de parties", desc: "Représenter deux tendances intérieures comme des parties symboliques." },
+                    { id: "30", name: "Négociation entre parties", desc: "Rechercher une solution acceptable entre objectifs concurrents." },
+                    { id: "31", name: "Marelle des croyances", desc: "Explorer une croyance, ses doutes et une alternative réaliste." },
+                    { id: "32", name: "Réimprinting (Reimprinting)", desc: "Réévaluer une expérience passée qui a contribué à une croyance." },
+                    { id: "33", name: "Alignement des niveaux logiques", desc: "Vérifier la cohérence entre environnement, comportements, capacités, croyances, identité." }
+                ]
+            },
+            {
+                id: 6,
+                name: "Stratégies mentales et comportements",
+                grade: "🏛️ L'Architecte des Stratégies",
+                competences: [
+                    { id: "34", name: "Modélisation (Modeling)", desc: "Étudier comment une personne réalise une tâche avec compétence." },
+                    { id: "35", name: "Générateur de nouveaux comportements", desc: "Imaginer une nouvelle réponse à une situation, puis la tester." },
+                    { id: "36", name: "Stratégie de créativité de Walt Disney", desc: "Rêveur, réaliste, critique : trois phases pour générer et évaluer." },
+                    { id: "37", name: "Modèle TOTE (Test–Operate–Test–Exit)", desc: "Tester, agir, tester à nouveau, arrêter quand le critère est satisfait." },
+                    { id: "38", name: "Métaprogrammes", desc: "Catégories de préférences dans le traitement de l'information." }
+                ]
+            }
+        ];
+const DOM=[["🛒","Marketing"],["🧘","Avec soi-même"],["🤝","Coaching d'un proche"],["🎤","Communication orale"],["💘","Séduction"]];
+const FI=["Un événement ou un comportement peut recevoir plusieurs interprétations. Le recadrage en examine une autre, sans prétendre que les faits changent.","Associer une situation à un état utile, puis apprendre à le retrouver. Ce n'est pas une méthode garantie pour contrôler les émotions.","Les caractéristiques sensorielles d'une représentation mentale (image proche ou lointaine, son fort ou faible). Les résultats ne sont pas garantis.","Examiner une situation depuis plusieurs points de vue : utile en négociation, en conflit et pour l'empathie. Comprendre un point de vue ne veut pas dire être d'accord.","Les mots, les questions et les présupposés. Influencer la compréhension n'est pas manipuler une décision.","Explorer croyances, besoins contradictoires et objectifs. Cela ne remplace pas une psychothérapie quand elle est nécessaire.","Les séquences qui mènent à une décision ou à une action : concevoir des méthodes reproductibles plutôt que compter sur l'inspiration."];
+const LEARN={
+"1":["Donner une signification différente à une chose. Ex. : une bouteille de vin n'est pas seulement de l'alcool, c'est aussi un moment de partage. Cela ne supprime pas les risques, cela ajoute une dimension de sens.","Identifie la perception actuelle, puis cherche une autre signification plausible et utile.",["Ne vends pas une perceuse : montre le meuble que le client pourra fabriquer.","« Mon hésitation signale peut-être un manque d'informations », plutôt que « je suis incapable de décider ».","Aider à examiner une autre lecture d'un échec, sans invalider sa déception.","Présenter un changement comme une occasion d'apprendre, en reconnaissant son coût réel.","Présenter un rendez-vous comme une découverte, sans transformer le refus en défi."]],
+"2":["Un comportement peut avoir des conséquences différentes selon le contexte.","Demande-toi : « Dans quelle situation cette caractéristique pourrait-elle être utile ? » Ne cherche pas à justifier tous les comportements : certains restent problématiques.",["Positionner selon le contexte d'usage : un petit ordinateur est limité pour certains usages, idéal en déplacement.","Une grande prudence aide pour un investissement risqué, mais gêne pour une décision réversible.","Repérer où sa minutie est un atout et où elle le ralentit.","Adapter le niveau de détail : réunion technique ou grand public.","La réserve d'une personne peut refléter le contexte, sans prouver un intérêt."]],
+"3":["Dans un modèle classique, on sépare un comportement indésirable de la fonction qu'il remplit, puis on cherche d'autres façons d'y répondre. Les six étapes varient selon les versions.","1. Définir le comportement à modifier. 2. Explorer le besoin ou la fonction qu'il remplit. 3. Identifier d'autres réponses possibles. 4. Évaluer conséquences et faisabilité. 5. Choisir une alternative. 6. Prévoir un test concret et réévaluer.",["Comprendre pourquoi un prospect reporte : incertitude, budget ou risque perçu, puis répondre à la vraie objection.","Remplacer le défilement compulsif par une pause ou une activité qui répond au besoin de détente.","Explorer ce qu'une habitude lui apporte avant de proposer des alternatives.","Remplacer les interruptions par la prise de notes si elles servent à ne pas oublier une idée.","Si tu évites les conversations par peur du rejet, exprimer ton intérêt progressivement en respectant l'autre."]],
+"4":["Rechercher le besoin qu'un comportement tente éventuellement de satisfaire, sans supposer que ce besoin est positif ni que le comportement est acceptable.","Remplace « Pourquoi est-ce que je fais n'importe quoi ? » par « Qu'est-ce que j'essaie d'obtenir ou d'éviter dans cette situation ? »",["Un client qui compare beaucoup les prix cherche peut-être à réduire le risque financier.","Explorer si la procrastination évite l'incertitude, la fatigue ou la peur de l'échec.","Chercher le besoin derrière un comportement défensif avant d'en discuter les conséquences.","Voir une question critique comme une demande possible de clarification.","Comprendre le besoin de sécurité ou de temps de l'autre, sans présumer ni insister."]],
+"5":["Schémas de langage associés à Robert Dilts, pour examiner les liens entre une croyance, ses raisons et ses conséquences : redéfinition, conséquences, contre-exemple, analogie, changement de niveau d'abstraction.","Repère une affirmation, puis examine sa portée, ses preuves et ses exceptions au lieu de chercher une réplique automatique.",["« C'est cher » : comparer coût total, durée d'utilisation et alternatives, avec des données vérifiables.","« J'ai échoué une fois, donc je suis mauvais » : distinguer un résultat ponctuel d'un jugement global.","Demander quelles expériences soutiennent sa conclusion et s'il existe des exceptions.","Répondre à une objection en clarifiant les critères de décision plutôt qu'en contredisant.","Remplacer le débat par une question ouverte : « Qu'est-ce qui te ferait te sentir à l'aise ? »"]],
+"6":["Donner un cadre de compréhension avant qu'une personne découvre une information ou vive une expérience.","Annonce le contexte, les objectifs et les limites d'une discussion avant de présenter le contenu.",["Expliquer à qui le produit convient (et ne convient pas) avant la démonstration.","Définir le résultat réaliste attendu d'une séance de travail avant de commencer.","Demander son accord et préciser que l'on explore, sans juger.","Annoncer les trois idées principales et la conclusion attendue.","Dire « J'aimerais apprendre à te connaître, sans pression » et laisser l'autre choisir."]],
+"7":["Associer un signal (geste, mot, image, élément de l'environnement) à une expérience ou à un état émotionnel.","Rappelle-toi une expérience où tu te sentais compétent et calme, associe-la à un geste discret, répète, puis vérifie si le geste facilite réellement le rappel de cet état.",["Une identité visuelle cohérente liée à une expérience client agréable, sans promettre un déclic automatique.","Une routine de préparation avant une tâche difficile.","Identifier les circonstances où la personne se sent capable et comment les retrouver.","Respiration lente et phrase de préparation avant de parler.","Créer des moments partagés agréables, sans chercher à conditionner quelqu'un."]],
+"8":["Associer plusieurs souvenirs ou ressources à un même signal.","Sélectionne plusieurs expériences positives distinctes, rappelle chacune puis associe-les au même geste. Observe si ce geste devient un rappel utile.",["Une marque aux associations cohérentes : fiabilité, simplicité, convivialité.","Réunir des expériences de courage, de créativité et de persévérance.","Recenser plusieurs réussites plutôt que s'appuyer sur un seul souvenir.","Une routine alliant posture, respiration et rappel d'une réussite.","Se préparer présent et détendu en se rappelant des échanges réussis, sans contrôler l'autre."]],
+"9":["Organiser plusieurs états ou signaux dans une séquence pour faciliter le passage de l'un à l'autre.","Identifie une progression réaliste (tension → curiosité → concentration), accompagne-la de rappels ou d'actions concrètes et vérifie ce qui marche.",["Un parcours client progressif : découverte, compréhension, évaluation, décision.","Une routine de transition entre repos et travail.","Découper une tâche anxiogène en étapes de plus en plus accessibles.","Préparation, respiration, première phrase mémorisée, puis parole naturelle.","Passer du léger au personnel seulement si les deux se sentent à l'aise."]],
+"10":["Dans certains protocoles, réduire l'influence d'une association émotionnelle indésirable en travaillant sur ses signaux et ses réponses.","Repère le déclencheur, observe ta réaction, teste une autre réponse dans une situation peu intense. Si la réaction est forte ou liée à un traumatisme, privilégie un accompagnement professionnel.",["Repérer ce qui crée de la méfiance dans un parcours d'achat et le corriger réellement.","Faire une pause avant de répondre à un message qui met en colère.","L'aider à reconnaître ses déclencheurs et à choisir sa réponse, avec son accord.","Faire une pause après une question déstabilisante.","Gérer son stress face à un silence, sans neutraliser les limites de l'autre."]],
+"11":["Visualiser un espace symbolique associé à ses ressources pour se préparer à une situation exigeante.","Imagine un cercle au sol, rappelle-toi une expérience de confiance, puis imagine entrer dans ce cercle avant une tâche. Évalue ensuite ton comportement réel : la visualisation ne suffit pas.",["Se préparer à défendre une proposition avec des arguments vérifiables.","Un rituel mental avant une décision importante.","Lui faire identifier ses ressources avant une épreuve, s'il apprécie la visualisation.","Répéter mentalement une présentation avec une posture stable.","Se rappeler que l'objectif est de partager un moment, pas de réussir une performance."]],
+"12":["Identifier un état utile (calme, curiosité, détermination) et les conditions qui facilitent son apparition.","Définis l'état recherché, repère les comportements qui l'accompagnent et construis une petite routine reproductible. L'état émotionnel ne doit pas être une condition obligatoire pour agir.",["Une curiosité analytique pour étudier un marché sans s'attacher à une idée.","Chercher les conditions de la concentration plutôt que compter sur la motivation.","Demander ce qui l'aide à se sentir soutenu ou capable.","Mobiliser la curiosité envers le public pour réduire la pression.","Cultiver une présence attentive et détendue plutôt que jouer un personnage."]],
+"13":["Vivre mentalement une scène à la première personne (association) ou l'observer comme devant soi (dissociation).","Pour préparer une action, imagine-la de ton point de vue. Pour prendre du recul, observe la scène de l'extérieur. Compare les effets sans forcer une représentation inconfortable.",["Se mettre à la place du client, puis prendre du recul sur le parcours global.","Revoir un conflit en observateur pour séparer faits et interprétation.","Proposer d'examiner un événement de l'extérieur, seulement si cela lui convient.","Répéter du point de vue de l'orateur, puis juger la clarté en spectateur.","Imaginer l'échange de son point de vue, puis se demander comment il peut être reçu, sans prétendre lire l'autre."]],
+"14":["Explorer comment agrandir ou réduire une représentation modifie l'expérience subjective.","Rappelle-toi une scène non traumatique, observe ce qui change si tu l'imagines plus petite ou éloignée. Tu peux aussi rendre plus visible un objectif positif.",["Agrandir l'objectif du client (le résultat voulu) plutôt que les caractéristiques du produit.","Réduire l'importance d'une erreur ponctuelle face à l'ensemble d'un projet.","Voir si une difficulté paraît plus gérable une fois découpée.","Donner plus de place au message qu'à une petite erreur de présentation.","Réduire l'enjeu d'une première rencontre : faire connaissance, pas décider de toute une relation."]],
+"15":["Modifier des caractéristiques visuelles d'un souvenir ou d'une anticipation pour explorer l'effet subjectif.","Observe ton ressenti, change une seule caractéristique mentale, vérifie l'effet. Ne confonds pas ce changement avec la résolution du problème sous-jacent.",["Rendre un résultat concret grâce à une démonstration authentique plutôt qu'à des promesses abstraites.","Prendre de la distance avec une anticipation anxieuse et revenir aux informations disponibles.","Distinguer ce qui s'est produit de ce qu'il imagine pouvoir arriver.","Rendre plus présente l'image de l'objectif que celle du jugement du public.","Prendre du recul face à un message ambigu ; demander une clarification si besoin."]],
+"16":["Exercice qui remplace rapidement une représentation déclenchante par une image de soi adoptant une réponse souhaitée.","Identifie un déclencheur, définis une réaction alternative réaliste, imagine les deux représentations puis répète le passage de l'une à l'autre. Mesure ensuite si ton comportement change réellement.",["Imaginer le passage d'un parcours compliqué à un parcours simplifié, puis le vérifier auprès de vrais clients.","Passer de l'envie de procrastiner à une première action de deux minutes.","Préparer une réponse alternative à une situation répétitive, avec son accord.","Remplacer l'image de soi qui perd ses moyens par celle de soi qui fait une pause et reprend son fil.","Remplacer « je dois lui plaire » par « je vais découvrir si nous nous entendons »."]],
+"17":["Imaginer une scène à travers plusieurs niveaux de représentation (se voir observer un film où l'on apparaît). Associée à des exercices sur des souvenirs pénibles ; ce n'est pas un traitement clinique validé.","Ne l'improvise pas pour un traumatisme ou une phobie importante. En version légère : observe une scène passée comme une séquence extérieure, reviens au présent et note ce que tu comprends autrement.",["Examiner une campagne en consommateur exposé et en analyste du message.","Observer un échange passé avec du recul, sans nier les émotions vécues.","Prendre du recul sur un désaccord ordinaire, en respectant ses limites.","Revoir une intervention pour distinguer la prestation réelle du jugement sur soi.","Analyser une interaction après coup pour apprendre, sans ruminer ni traiter l'autre en objet d'étude."]],
+"18":["Clarifier sa propre expérience, ses besoins, ses émotions et ses limites.","Complète : « J'observe… », « Je ressens… », « J'ai besoin de… », « Je demande… ».",["Identifier précisément le problème client que ton offre résout.","Distinguer ses objectifs des attentes de l'entourage.","L'aider à dire ce qu'il veut lui-même, sans lui dicter ses choix.","Distinguer faits, opinions et demandes.","Exprimer son intérêt et ses limites honnêtement, sans contrôler la réaction de l'autre."]],
+"19":["Essayer de comprendre comment l'autre peut vivre la situation, en reconnaissant que tu ne peux pas connaître son expérience à sa place.","Demande-toi ce qu'il sait, ce qu'il risque de perdre, ce qu'il pourrait souhaiter. Vérifie tes hypothèses en lui posant des questions.",["Comprendre risques, objections et critères de décision d'un acheteur.","Considérer comment tes paroles ont pu être reçues, sans supposer le pire.","Écouter son interprétation avant de proposer la tienne.","Adapter les explications au niveau et aux préoccupations du public.","Être attentif au confort et au consentement de l'autre ; le silence n'est pas un accord."]],
+"20":["Examiner la situation comme un observateur extérieur, en cherchant faits, interprétations et intérêts de chacun.","Décris l'interaction sans adjectifs accusateurs, puis identifie ce qui est établi et ce qui reste une hypothèse.",["Analyser une campagne sans attribuer trop vite le résultat à une seule variable.","Évaluer un choix par ses conséquences plutôt que par son état émotionnel du moment.","Reformuler les deux versions d'un conflit sans désigner un coupable.","Examiner une discussion difficile pour trouver où est né le malentendu.","Vérifier la réciprocité par des comportements observables, sans fabriquer de certitude."]],
+"21":["Faire dialoguer son point de vue, celui de l'autre et celui de l'observateur pour une compréhension plus complète.","Rédige trois descriptions distinctes, identifie leurs différences, puis formule une prochaine étape qui respecte les besoins et limites concernés.",["Faire correspondre objectifs de l'entreprise, expérience client et contraintes du marché.","Arbitrer entre envie immédiate, conséquences pour autrui et objectifs à long terme.","Explorer plusieurs lectures d'un conflit puis l'aider à choisir lui-même une action.","Préparer un argumentaire qui prend en compte l'orateur, le public et les faits.","Vérifier que les deux veulent la même chose, au-delà de l'attirance."]],
+"22":["Modèle de questionnement visant à préciser les formulations vagues, les généralisations et les liens de causalité supposés.","Face à une affirmation floue, demande une précision concrète : « Toujours ? », « Qui précisément ? », « Sur quels faits te bases-tu ? »",["« C'est trop cher » → « Par rapport à quelle alternative, pour quel budget ? »","« Je rate tout » → « Quelles situations précises ? Qu'est-ce qui a marché ? »","Explorer ce que signifie « personne ne me respecte », sans invalider le ressenti.","Clarifier une demande ambiguë avant de répondre.","Demander « Prendre ton temps, qu'est-ce que cela signifie pour toi ? », si la personne veut en parler."]],
+"23":["Structures linguistiques issues de l'hypnose ericksonienne : formulations ouvertes, suggestions, métaphores.","Emploie un langage évocateur qui laisse la liberté d'interpréter, au lieu d'imposer une expérience intérieure.",["« Imaginez comment cela pourrait simplifier votre quotidien » : se projeter sans promesse certaine.","« Je peux prendre le temps de découvrir quelle étape me convient. »","Des questions ouvertes qui laissent émerger ses propres idées.","Illustrer par une histoire ou une métaphore plutôt qu'une liste abstraite.","Une invitation ouverte : « On pourrait découvrir ce café ensemble si ça te dit »."]],
+"24":["Éléments qu'une phrase tient implicitement pour acquis. « Quand souhaites-tu commencer ? » présuppose l'envie de commencer : utile si l'intention est établie, mais peut contourner un choix.","Repère ce que ta phrase suppose et vérifie que cette hypothèse est fondée avant de l'utiliser.",["« Quel format vous conviendrait ? » après confirmation que le prospect veut acheter.","« Quelle première étape pourrais-je essayer ? » quand tu as réellement décidé d'avancer.","« Quel soutien te serait utile ? » après lui avoir demandé s'il veut être accompagné.","Annoncer le plan en précisant l'objectif.","Proposer un café seulement si l'autre le souhaite ; sinon proposer simplement et accepter le refus."]],
+"25":["Expliquer une idée à travers une autre situation qui lui ressemble sur certains aspects.","Choisis une analogie pertinente, précise ce qu'elle permet de comprendre et ses limites. Une métaphore éclaire, elle ne prouve pas.",["« Une assurance est un filet de sécurité », en précisant les garanties réelles.","« Une habitude, c'est un jardin » : de petites actions répétées.","Comparer une période difficile à une traversée, sans minimiser la souffrance.","Expliquer un système complexe par une image simple et mémorable.","Humour ou image partagée pour enrichir l'échange, sans jouer sur les émotions."]],
+"26":["Dans son usage classique, deux messages ou exigences incompatibles sont reçus dans une relation où l'on ne peut guère les contester. Ce n'est pas simplement proposer deux options.","En communication saine, évite les injonctions contradictoires. Propose plutôt un choix réel entre deux possibilités acceptables, avec la possibilité de refuser.",["Proposer deux formats de démonstration, sans cacher la possibilité de ne pas poursuivre.","Choisir entre deux méthodes de travail adaptées plutôt que s'imposer une seule voie.","Proposer plusieurs options sans conditionner ton soutien à son choix.","Présenter deux voies en expliquant les compromis de chacune.","Proposer deux activités en acceptant un refus. Éviter les pièges rhétoriques."]],
+"27":["Poser des questions qui réduisent l'ambiguïté et rendent une affirmation vérifiable.","Demande des exemples, des critères, une période, une quantité ou une définition.",["« Combien de temps prenez-vous pour traiter une commande ? »","« Quel résultat concret me ferait dire que cette semaine a été productive ? »","« Qu'est-ce qui te ferait dire que la situation s'est améliorée ? »","« Le projet est en retard : de combien de jours parle-t-on ? »","« Sorties tranquilles ou endroits animés ? » pour connaître une préférence réelle."]],
+"28":["Passer d'un détail concret à une catégorie générale, ou inversement.","Quand la discussion devient trop abstraite, demande un exemple concret. Quand elle reste bloquée sur un détail, cherche le principe général qui le relie à l'objectif.",["De « le logiciel envoie des rappels » à « il réduit les oublis de rendez-vous », si les résultats le démontrent.","De « je dois répondre à cet e-mail » à « je veux entretenir des relations fiables ».","Partir d'un conflit précis pour trouver le besoin général de respect ou de reconnaissance.","Alterner une idée principale et un exemple concret.","Passer du léger aux valeurs quand l'échange devient naturellement personnel."]],
+"29":["Représenter deux tendances intérieures comme des « parties » symboliques pour comprendre ce que chacune cherche à protéger ou obtenir.","Décris les deux tendances, leurs besoins, leurs risques et les solutions qui pourraient respecter les deux autant que possible.",["Arbitrer entre maximiser les ventes et protéger la confiance des clients.","Faire dialoguer la partie qui veut prendre des risques et celle qui veut la sécurité financière.","Explorer deux besoins contradictoires sans imposer de conclusion.","Concilier parler avec assurance et rester humble et précis.","Reconnaître à la fois l'envie de proximité et le besoin de préserver son rythme."]],
+"30":["Rechercher une solution acceptable entre plusieurs objectifs intérieurs concurrents.","Pour chaque objectif, identifie le besoin protégé, les contraintes et un compromis possible. Teste ce compromis dans la réalité.",["Un compromis entre offre rentable et prix accessible pour une cible précise.","Organiser une semaine qui respecte travail, repos et relations sociales.","L'aider à trouver une option entre deux choix qu'il croit incompatibles.","Une proposition qui concilie les intérêts des différentes parties.","Un rythme de relation qui convient aux deux, sans qu'une seule personne fasse tous les compromis."]],
+"31":["Exercice où l'on se déplace symboliquement entre positions liées à une croyance : croyance actuelle, doute, croyance souhaitée. Les étapes varient selon les protocoles.","Formule une croyance précise, examine ce qui la soutient, explore les objections, définis une croyance alternative réaliste, puis cherche des faits pour l'évaluer.",["Tester « les clients n'achèteront pas en ligne » par des expériences limitées et mesurables.","Examiner « je ne suis pas capable de parler en public » à partir de situations concrètes.","Distinguer une croyance héritée d'une conclusion tirée de ses propres expériences.","Remplacer « je dois convaincre tout le monde » par « j'expose clairement mes arguments ».","Remettre en question « si elle me plaît, je dois lui plaire » et accepter l'incertitude."]],
+"32":["Revenir mentalement à une expérience passée qui aurait contribué à une croyance actuelle, puis explorer une autre interprétation et les ressources utiles.","Distingue les faits du souvenir, ce que tu en as conclu et ce que tu comprends aujourd'hui. La mémoire est reconstructive : les images mentales ne sont pas des preuves. Pour un traumatisme, fais appel à un professionnel qualifié.",["Examiner une ancienne mauvaise expérience d'achat pour comprendre une méfiance actuelle.","Réévaluer une erreur passée à la lumière de ce que tu savais alors.","L'écouter sans lui suggérer de souvenirs ni imposer une interprétation.","Dépasser une mauvaise présentation en identifiant les compétences acquises depuis.","Apprendre d'une relation passée sans supposer que chaque personne répétera les mêmes schémas."]],
+"33":["Modèle de Robert Dilts : environnement, comportements, capacités, croyances et valeurs, identité et vision plus large. C'est une grille de réflexion, pas une hiérarchie scientifiquement établie.","Examine une difficulté à plusieurs niveaux et vérifie que l'objectif, les moyens et les contraintes sont cohérents.",["Vérifier que la promesse de la marque correspond au produit, aux capacités et aux pratiques.","Vérifier qu'une activité quotidienne correspond à tes valeurs et objectifs.","Voir si la difficulté vient des conditions, des compétences, des convictions ou d'un objectif flou.","Aligner message, exemples et comportement de l'orateur.","Vérifier la compatibilité des valeurs, attentes et comportements observables."]],
+"34":["Étudier comment une personne réalise une tâche avec compétence, puis identifier ce qui peut être appris et reproduit.","Observe contexte, décisions, actions, retours et critères de réussite. Distingue le reproductible de ce qui tient à la personnalité ou aux circonstances.",["Décomposer une campagne performante et vérifier ce qui explique vraiment les résultats.","Étudier une période où tu travaillais bien pour retrouver les conditions favorables.","Lui faire identifier comment il a réussi une tâche similaire.","Analyser la structure d'une présentation efficace : intro, exemples, transitions, conclusion.","Observer les habitudes de relations saines (écoute, curiosité, réciprocité) sans copier une personnalité."]],
+"35":["Exercice de visualisation et de préparation : imaginer une nouvelle réponse à une situation donnée, puis la tester.","Identifie une situation, définis le comportement souhaité, répète-le mentalement et prévois une mise en pratique réaliste.",["Simuler des réponses aux objections avant un entretien client.","Préparer une autre réponse à un déclencheur habituel de procrastination.","Répéter une conversation difficile avec lui, s'il le souhaite.","S'entraîner à reformuler puis répondre de façon structurée à une question imprévue.","Préparer une façon naturelle d'engager la conversation, sans script rigide."]],
+"36":["Modèle de créativité en trois positions : le rêveur, le réaliste et le critique. Un exercice de génération et d'évaluation d'idées, pas une garantie de créativité.","Sépare les trois phases : produis d'abord des idées, transforme les plus prometteuses en plan concret, puis examine leurs faiblesses et améliore-les.",["Imaginer plusieurs campagnes, concevoir un test, puis analyser risques et mesures de réussite.","Explorer une ambition, la transformer en étapes, identifier les obstacles réels.","Explorer un projet sans critiquer trop tôt, puis examiner sa faisabilité.","Concevoir une présentation originale, la structurer, tester sa clarté.","Imaginer une activité à deux, vérifier sa faisabilité, s'assurer qu'elle intéresse l'autre."]],
+"37":["Modèle cybernétique : tester l'état actuel, agir, tester à nouveau et arrêter lorsque le critère de sortie est satisfait.","Définis un objectif mesurable, choisis une action, compare le résultat au critère, ajuste si nécessaire et décide quand arrêter.",["Tester une publicité, mesurer le coût par résultat, modifier une variable, arrêter selon des critères préétablis.","Définir le résultat d'une séance, commencer, vérifier l'avancement, finir quand le critère est atteint.","Définir un objectif accessible, suivre les progrès, réviser le plan.","Répéter, mesurer durée et clarté, corriger jusqu'au niveau attendu.","Proposer, observer la réciprocité, adapter, s'arrêter si l'intérêt n'est pas partagé."]],
+"38":["Catégories de préférences supposées dans le traitement de l'information et la décision (objectifs ou évitement des problèmes, nouveauté ou continuité). Ce ne sont pas des types de personnalité scientifiquement validés.","Traite ces catégories comme des hypothèses temporaires. Observe, pose des questions et adapte ton message aux préférences réellement exprimées.",["Montrer les gains possibles et les risques évités, selon les préoccupations du client.","Voir si tu es plus motivé par un objectif à atteindre ou un problème à résoudre.","Lui demander s'il préfère une vision globale ou des étapes détaillées.","Adapter niveau de détail et ordre des arguments au public.","Découvrir les préférences de l'autre par la conversation, sans lui coller d'étiquette."]]
+};
+
+const KEY='pnl_challenge_progress_v1',MK='pnl_meta_v3',COL=['#ff3d6e','#ff9a2e','#ffd93b','#3ddc6a','#3aa0ff','#b45cff','#ff6bd6'],ROW=96,TITLES=['Recrue','Tiron','Mirmillon','Rétiaire','Thraex','Champion','Primus','Rex de l\'arène'],DEC=['🍭','⚔️','🍬','🛡️','🍩','🏺','🧁','🔥'],EM=['🔥','🍬','⚔️','⭐'];
+const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+const sto=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let P=ld(KEY,{}),M=ld(MK,null),N={},S={},G={},W={},combo=0,lastUse=0,busy=false,timers=[];
+FAMILIES.forEach(f=>f.competences.forEach(c=>{if(P[c.id]===undefined)P[c.id]=0}));
+const done=c=>P[c.id]>=2,famDone=f=>f.competences.every(done),lockF=f=>{const i=FAMILIES.indexOf(f);return i>0&&!famDone(FAMILIES[i-1])},unl=(f,j)=>!lockF(f)&&(j==0||done(f.competences[j-1]));
+const mast=()=>Object.values(P).filter(v=>v>=2).length,uses=()=>Object.values(P).reduce((a,b)=>a+b,0);
+const first=!M;
+if(!M)M={xp:mast()*150+uses()*50,streak:0,last:'',ach:{},snd:true,vib:true};
+const day=o=>new Date(Date.now()-o*864e5).toISOString().slice(0,10);
+if(M.last!==day(0)){M.streak=M.last===day(1)?M.streak+1:1;M.last=day(0)}
+const saveAll=()=>{sto(KEY,P);sto(MK,M)};
+let AC;const beep=(f,d=.1,t='sine',v=.12)=>{if(!M.snd)return;try{AC=AC||new(window.AudioContext||webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}};
+const vib=n=>{if(M.vib&&navigator.vibrate)navigator.vibrate(n)};
+const win=()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.16,'triangle'),i*90));
+/* braises de fond */
+const bg=$('bg'),bx=bg.getContext('2d');let em=[];
+function rs(){bg.width=innerWidth;bg.height=innerHeight}rs();addEventListener('resize',rs);
+const EC=['#ff5a1f','#ffb52e','#ffe27a','#ff3d6e','#ff9ab5'];
+function mkE(init){return{x:Math.random()*innerWidth,y:init?Math.random()*innerHeight:innerHeight+10,v:.5+Math.random()*1.8,r:1+Math.random()*3.5,ph:Math.random()*6,c:EC[Math.floor(Math.random()*5)],a:.5+Math.random()*.5}}
+for(let i=0;i<80;i++)em.push(mkE(true));
+function fire(){bx.clearRect(0,0,bg.width,bg.height);bx.globalCompositeOperation='lighter';em.forEach((e,i)=>{e.y-=e.v;e.ph+=.03;e.x+=Math.sin(e.ph)*.6;const k=e.y/innerHeight;bx.globalAlpha=Math.max(0,e.a*Math.min(1,k*1.4));bx.fillStyle=e.c;bx.beginPath();bx.arc(e.x,e.y,e.r,0,6.3);bx.fill();if(e.y<-10)em[i]=mkE(false)});bx.globalCompositeOperation='source-over';requestAnimationFrame(fire)}fire();
+/* confettis */
+const cv=$('fx'),cx=cv.getContext('2d');let ps=[],run=false;
+function size(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio}size();addEventListener('resize',size);
+function go(){if(!run){run=true;requestAnimationFrame(tick)}}
+function burst(x,y,n=24,sp=7){for(let i=0;i<n;i++){const a=Math.random()*6.283,s=(.4+Math.random())*sp;ps.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-3,c:COL[i%7],r:3+Math.random()*4,l:60+Math.random()*30,e:i%3==0?EM[i%4]:0})}go()}
+function rain(){for(let i=0;i<80;i++)ps.push({x:Math.random()*innerWidth,y:-20-Math.random()*250,vx:Math.random()*2-1,vy:2+Math.random()*3,c:COL[i%7],r:4+Math.random()*4,l:150,e:i%4==0?EM[i%4]:0});go()}
+function tick(){cx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);cx.clearRect(0,0,innerWidth,innerHeight);ps=ps.filter(p=>p.l-->0);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.25;cx.globalAlpha=Math.min(1,p.l/30);if(p.e){cx.font=p.r*4+'px serif';cx.fillText(p.e,p.x,p.y)}else{cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.r*1.6,p.r)}});run=ps.length>0;if(run)requestAnimationFrame(tick)}
+function floatTxt(t,x,y){const e=document.createElement('div');e.className='fl';e.textContent=t;e.style.left=x+'px';e.style.top=y+'px';document.body.appendChild(e);setTimeout(()=>e.remove(),1100)}
+const ctr=el=>{const r=el.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]};
+const shake=()=>{$('app').classList.remove('shk');void $('app').offsetWidth;$('app').classList.add('shk')};
+let tq=[],tb=false;function toast(h){tq.push(h);if(!tb)nextT()}
+function nextT(){const h=tq.shift();if(!h){tb=false;return}tb=true;$('toast').innerHTML=h;$('toast').classList.add('on');win();setTimeout(()=>{$('toast').classList.remove('on');setTimeout(nextT,450)},2200)}
+const ACH=[['first','🗡️','Premier sang','Valide 1 utilisation',()=>uses()>=1],['m1','⭐','Première maîtrise','Maîtrise 1 technique',()=>mast()>=1],['m10','🔟','Décurion','Maîtrise 10 techniques',()=>mast()>=10],['m19','🥈','Mi-parcours','Maîtrise 19 techniques',()=>mast()>=19],['w1','🏅','Champion de niveau','Termine 1 niveau',()=>FAMILIES.some(famDone)],['w4','👑','Quadruple couronne','Termine 4 niveaux',()=>FAMILIES.filter(famDone).length>=4],['s3','🔥','Flamme vive','3 jours de série',()=>M.streak>=3],['all','🏛️','Légende de l\'arène','Maîtrise les 38',()=>mast()>=38]];
+function checkAch(q){ACH.forEach(a=>{if(!M.ach[a[0]]&&a[4]()){M.ach[a[0]]=1;if(!q)toast(`${a[1]} Succès : ${a[2]}`)}})}
+const lvl=()=>Math.floor(M.xp/200)+1;
+function gain(xp,x,y){const l=lvl();M.xp+=xp;floatTxt(`+${xp} XP`,x,y);if(lvl()>l){toast(`⬆️ Rang ${lvl()} !<br><small>${TITLES[Math.min(lvl()-1,7)]}</small>`);rain()}hud()}
+function hud(){const l=lvl();$('lv').textContent=l;$('ttl').textContent=`Rang ${l} · ${TITLES[Math.min(l-1,7)]} · ${M.xp%200}/200`;$('xpb').style.width=(M.xp%200)/2+'%';$('stk').textContent='🔥 '+M.streak;$('sp').textContent=`Rang ${l} · ${mast()} / 38 maîtrisées · série 🔥 ${M.streak}`}
+function frontier(){for(const f of FAMILIES)for(let j=0;j<f.competences.length;j++)if(unl(f,j)&&!done(f.competences[j]))return[f,j]}
+function build(){const map=$('map');map.innerHTML='';N={};S={};G={};W={};
+map.insertAdjacentHTML('beforeend','<div class="sum"><div class="big1">🏛️</div><b class="cin">LE COLISÉE</b><small id="sumt">Atteins le sommet pour devenir légende !</small></div>');
+for(let i=6;i>=0;i--){const f=FAMILIES[i],n=f.competences.length,H=(n+1)*ROW+30,w=document.createElement('div');w.className='world';w.style.setProperty('--c',COL[i]);
+const e=f.grade.split(' ')[0],nm=f.grade.slice(e.length+1);
+w.innerHTML=`<div class="wh"><span class="e">${e}</span><div class="t"><em>NIVEAU ${i+1}</em><b>${f.name}</b><small>${nm}</small><div class="bar"><i></i></div></div><b class="n2"></b></div>`;
+const p=document.createElement('div');p.className='path';p.style.height=H+'px';
+const sg=document.createElementNS(NS,'svg');sg.setAttribute('viewBox',`0 0 100 ${H}`);sg.setAttribute('preserveAspectRatio','none');p.appendChild(sg);
+const X=j=>50+30*Math.sin(j*1.25+i),Y=j=>H-ROW*.6-j*ROW;
+for(let j=0;j<=n;j++){const d=`M${j?X(j-1):50} ${j?Y(j-1):H}L${X(j)} ${Y(j)}`;['sb','sl'].forEach(k=>{const l=document.createElementNS(NS,'path');l.setAttribute('d',d);l.setAttribute('class',k);sg.appendChild(l);if(k=='sl')S[f.id+'_'+j]=l})}
+for(let k=0;k<5;k++){const d=document.createElement('span');d.className='dc';d.textContent=DEC[(i*3+k)%8];d.style.cssText=`${k%2?'right':'left'}:-2%;top:${60+k*(H-120)/4}px;animation-delay:${k*.4}s`;p.appendChild(d)}
+f.competences.forEach((c,j)=>{const b=document.createElement('button');b.className='n';b.style.cssText=`left:${X(j)}%;top:${Y(j)}px`;b.innerHTML=`<i class="b"></i><u class="ic">${e}</u><u class="fi">🔥</u><em class="st"></em>`;b.onclick=()=>openC(f,j);N[c.id]=b;p.appendChild(b)});
+const g=document.createElement('button');g.className='n g';g.style.cssText=`left:${X(n)}%;top:${Y(n)}px`;g.innerHTML='<i class="b"></i>';g.onclick=()=>{vib(10);toast(`${f.grade}<br><small>${famDone(f)?'Niveau conquis !':'Termine tout le niveau'}</small>`)};G[f.id]=g;p.appendChild(g);
+w.appendChild(p);map.appendChild(w);W[f.id]=w}
+map.insertAdjacentHTML('beforeend','<div class="start"><div class="big1">🚪</div><b class="cin">PORTE DE L\'ARÈNE</b><small>⬆️ Ton ascension commence ici · Niveau 1</small></div>');refresh()}
+function refresh(){FAMILIES.forEach(f=>{const nd=f.competences.filter(done).length,n=f.competences.length;
+f.competences.forEach((c,j)=>{const b=N[c.id],u=unl(f,j)||done(c);b.className='n '+(u?(done(c)?'done':'avail'):'locked');
+b.querySelector('.b').innerHTML=u?c.id:'🔒';b.querySelector('.st').textContent=u?(P[c.id]>0?'★':'☆')+(P[c.id]>1?'★':'☆'):'';S[f.id+'_'+j].classList.toggle('on',u)});
+S[f.id+'_'+n].classList.toggle('on',nd==n);const g=G[f.id];g.className='n g '+(nd==n?'done':'locked');g.querySelector('.b').textContent=nd==n?'🏆':'🛡️';
+W[f.id].querySelector('.bar i').style.width=nd/n*100+'%';W[f.id].querySelector('.n2').textContent=nd+'/'+n});
+document.querySelectorAll('.av').forEach(e=>e.remove());const fr=frontier();if(fr){const a=document.createElement('div');a.className='av';a.textContent='🤺';N[fr[0].competences[fr[1]].id].appendChild(a)}
+if(!fr&&$('sumt'))$('sumt').textContent='👑 VICTOIRE ! Tu es une légende de l\'arène !';
+$('cta').style.display=fr?'':'none';hud()}
+const sheet=h=>{$('sheet').innerHTML=h;$('veil').classList.add('on');$('sheet').classList.add('on')};
+const close=()=>{$('veil').classList.remove('on');$('sheet').classList.remove('on')};$('veil').onclick=close;
+function openC(f,j){const c=f.competences[j],i=FAMILIES.indexOf(f),n=P[c.id],u=unl(f,j)||done(c);vib(8);beep(520,.08);
+let a='';if(!u)a=`<p>🔒 ${lockF(f)?`Tu ne peux pas sauter de niveau : termine d'abord le Niveau ${i} (${FAMILIES[i-1].grade}).`:`Maîtrise d'abord « ${f.competences[j-1].name} » (2 utilisations).`}</p>`;
+else a=`<button class="big alt" id="lr">📖 APPRENDRE</button>`+(n>=2?'<p style="margin-top:10px">🏆 Technique maîtrisée !</p>':`<div class="rw" style="margin-top:10px"><span>+${n?100:50} XP</span></div><button class="big" id="use">⚔️ J'AI UTILISÉ !</button>`);
+sheet(`<div class="cd" style="--c:${COL[i]}">${u?c.id:'🔒'}</div><div class="tag">Niveau ${i+1} · ${f.name}</div><h2>${c.name}</h2><p>${c.desc}</p><div class="stars"><span class="${n>0?'f':''}">★</span><span class="${n>1?'f':''}">★</span></div>${a}<button class="big gh" id="cl">Fermer</button>`);
+$('cl').onclick=close;if($('lr'))$('lr').onclick=()=>learn(f,j);if($('use'))$('use').onclick=()=>{const[x,y]=ctr($('use'));use(f,j,x,y)}}
+function learn(f,j){const c=f.competences[j],L=LEARN[c.id],i=FAMILIES.indexOf(f),n=P[c.id];beep(600,.08,'triangle');vib(8);
+sheet(`<div class="cd" style="--c:${COL[i]}">${c.id}</div><div class="tag">Niveau ${i+1} · ${f.name}</div><h2>${c.name}</h2><div class="ln"><h3>💡 Idée de la famille</h3><p>${FI[i]}</p><h3>🎯 Principe</h3><p>${L[0]}</p><h3>🛠️ Mode d'emploi</h3><p>${L[1]}</p><h3>🌍 Applications</h3>${DOM.map((d,k)=>`<div class="dm"><span>${d[0]}</span><div><b>${d[1]}</b><br>${L[2][k]}</div></div>`).join('')}<p class="nt">Outil de réflexion et de communication, pas une loi démontrée du fonctionnement humain.</p></div>${n<2?`<button class="big" id="use">⚔️ J'AI UTILISÉ !</button>`:''}<button class="big gh" id="bk">← Retour</button>`);
+$('sheet').scrollTop=0;$('bk').onclick=()=>openC(f,j);if($('use'))$('use').onclick=()=>{const[x,y]=ctr($('use'));use(f,j,x,y)};
+if(!M.read)M.read={};if(!M.read[c.id]){M.read[c.id]=1;gain(10,innerWidth/2,innerHeight*.35);saveAll()}}
+function use(f,j,x,y){const c=f.competences[j],b=N[c.id];P[c.id]++;const m=P[c.id]>=2;
+combo=Date.now()-lastUse<30000?combo+1:1;lastUse=Date.now();gain((m?100:50)+Math.min(combo-1,5)*10,x,y);if(combo>1)setTimeout(()=>floatTxt('COMBO ×'+combo+' 🔥',x,y-40),200);
+close();vib(m?[30,40,60]:15);m?win():beep(660,.1,'triangle');if(m)shake();
+if(m&&famDone(f)){gain(300,x,y-60);toast(`🏆 Niveau ${FAMILIES.indexOf(f)+1} conquis !<br><small>${f.grade} · +300 XP</small>`);rain()}
+refresh();checkAch();saveAll();b.classList.add('pop');setTimeout(()=>b.classList.remove('pop'),600);burst(...ctr(b),m?40:18);
+if(m&&j<f.competences.length-1){const nb=N[f.competences[j+1].id];setTimeout(()=>{nb.scrollIntoView({block:'center',behavior:'smooth'});burst(...ctr(nb),12)},500)}}
+function achS(){sheet('<h2>🏆 Succès</h2>'+ACH.map(a=>`<div class="ac ${M.ach[a[0]]?'on':''}"><span>${a[1]}</span><div><b>${a[2]}</b><small>${a[3]}</small></div></div>`).join('')+'<button class="big gh" id="cl">Fermer</button>');$('cl').onclick=close}
+function optS(){sheet(`<h2>⚙️ Options</h2><div class="tg">🔊 Sons<button class="big gh" style="width:90px;margin:0;padding:8px" id="o1">${M.snd?'ON':'OFF'}</button></div><div class="tg">📳 Vibrations<button class="big gh" style="width:90px;margin:0;padding:8px" id="o2">${M.vib?'ON':'OFF'}</button></div><button class="big alt" id="o3">▶ Rejouer l'ascension</button><button class="big gh" id="o4" style="margin-top:14px">⟲ Tout réinitialiser</button><button class="big gh" id="cl" style="margin-top:14px">Fermer</button>`);
+$('o1').onclick=()=>{M.snd=!M.snd;saveAll();optS()};$('o2').onclick=()=>{M.vib=!M.vib;saveAll();optS()};$('o3').onclick=()=>{close();replay()};
+$('o4').onclick=()=>{if(confirm('Tout réinitialiser (progression, XP) ? Tu repartiras du niveau 1.')){FAMILIES.forEach(f=>f.competences.forEach(c=>P[c.id]=0));M.xp=0;M.ach={};saveAll();close();refresh();toBottom()}};$('cl').onclick=close}
+$('nav').onclick=e=>{const t=e.target.closest('button')?.dataset.t;if(!t)return;beep(480,.06);vib(6);if(t=='ach')achS();if(t=='opt')optS()};
+$('cta').onclick=()=>{const fr=frontier();if(!fr)return;N[fr[0].competences[fr[1]].id].scrollIntoView({block:'center',behavior:'smooth'});setTimeout(()=>openC(fr[0],fr[1]),450)};
+const toBottom=()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'});
+function replay(){timers.forEach(clearTimeout);timers=[];busy=true;toBottom();
+FAMILIES.forEach(f=>{f.competences.forEach(c=>{N[c.id].className='n locked pre'});G[f.id].className='n g locked pre'});document.querySelectorAll('.sl').forEach(e=>e.classList.remove('on'));
+document.querySelectorAll('.av').forEach(e=>e.remove());
+const st=[];FAMILIES.forEach(f=>f.competences.forEach((c,j)=>{if(done(c))st.push([f,c,j])}));const dt=Math.min(180,4500/Math.max(st.length,1));
+const skip=()=>{timers.forEach(clearTimeout);busy=false;refresh();const fr=frontier();if(fr)N[fr[0].competences[fr[1]].id].scrollIntoView({block:'center',behavior:'smooth'})};
+setTimeout(()=>addEventListener('pointerdown',()=>{if(busy)skip()},{once:true}),400);
+st.forEach(([f,c,j],k)=>timers.push(setTimeout(()=>{S[f.id+'_'+j].classList.add('on');const b=N[c.id];b.scrollIntoView({block:'center'});
+timers.push(setTimeout(()=>{b.className='n done pop';b.querySelector('.b').innerHTML=c.id;b.querySelector('.st').textContent='★★';beep(500+k*18,.07,'triangle');burst(...ctr(b),10,5);if(j==f.competences.length-1){S[f.id+'_'+(j+1)].classList.add('on');G[f.id].className='n g done';G[f.id].querySelector('.b').textContent='🏆'}},dt*.4))},k*dt)));
+timers.push(setTimeout(()=>{if(busy)skip()},st.length*dt+600))}
+$('go').onclick=()=>{$('splash').classList.add('off');beep(660,.12,'triangle');vib(20);setTimeout(replay,250)};
+checkAch(first);saveAll();build();toBottom();
+</script></body></html>
